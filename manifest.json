@@ -1,8 +1,8 @@
 {
   "id": "newph-provider",
-  "name": "NewPH Provider",
+  "name": "NewPH",
   "version": "1.0.0",
-  "description": "Custom search provider for Seanime",
+  "description": "Multi-site search provider for Seanime",
   "author": "teto",
   "main": "index.js",
   "type": "on-line-streaming",
