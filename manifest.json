@@ -1,10 +1,10 @@
 {
   "id": "newph-provider",
   "name": "NewPH",
-  "version": "1.0.0",
-  "description": "Multi-site search provider for Seanime",
+  "version": "1.0.2",
+  "description": "Multi-site search provider",
   "author": "teto",
-  "main": "index.js",
-  "type": "on-line-streaming",
-  "language": "javascript"
+  "type": "onlinestream-provider",
+  "language": "javascript",
+  "payload": "function search(query) { const sites = { 'pornhub': { base: 'https://www.pornhub.com', url: 'https://www.pornhub.com/video/search?search=' + encodeURIComponent(query), item: 'li.pcVideoListItem', title: 'a.thumbnailTitle', link: 'a.thumbnailTitle', thumb: 'img.js-videoThumb' }, '1porn': { base: 'https://www.1porn.tv', url: 'https://www.1porn.tv/search/' + encodeURIComponent(query) + '/1/', item: 'div.item', title: 'strong.title', link: 'a.thumb_title', thumb: 'img.thumb' } }; let allResults = []; for (let name in sites) { let site = sites[name]; try { let response = http.get(site.url); let doc = dom.parse(response.body); let items = doc.querySelectorAll(site.item); items.forEach(el => { let titleEl = el.querySelector(site.title); let linkEl = el.querySelector(site.link); let thumbEl = el.querySelector(site.thumb); if (titleEl && linkEl) { let rawLink = linkEl.attr('href'); allResults.push({ title: '[' + name.toUpperCase() + '] ' + titleEl.text().trim(), url: rawLink.startsWith('http') ? rawLink : site.base + rawLink, image: thumbEl ? (thumbEl.attr('src') || thumbEl.attr('data-src')) : '', description: 'Source: ' + name }); } }); } catch (e) { console.log('Error: ' + e); } } return allResults; } function info(url) { return { videos: [{ url: url, quality: 'Standard', type: 'video' }] }; }"
 }
